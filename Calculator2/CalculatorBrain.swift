@@ -191,14 +191,21 @@ class CalculatorBrain: Printable
                 } else {
                     let firstResult = brainDescription(remainingOps)
                     remainingOps = firstResult.remainingOps
+                    var firstString = firstResult.result
                     var secondString  = secondResult.result
-                    if (symbol == "×" || symbol == "÷" && NSNumberFormatter().numberFromString(secondResult.result)?.doubleValue == nil){
-                        secondString = "(" + secondString + ")"
+                    if (symbol == "×" || symbol == "÷"){
+                        if NSNumberFormatter().numberFromString(secondResult.result)?.doubleValue == nil {
+                            secondString = "(" + secondString + ")"
+                        }
+                        if (NSNumberFormatter().numberFromString(firstString)?.doubleValue == nil){
+                            firstString = "(" + firstString + ")"
+                        }
+                        
                     }
                     if (firstResult.result == "" && remainingOps.isEmpty){
                         result =  "?" + symbol + secondString
                     } else {
-                        result = firstResult.result + symbol + secondString
+                        result = firstString + symbol + secondString
                     }
                 }
         
